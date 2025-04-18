@@ -53,7 +53,7 @@ resource "azurerm_lb_rule" "lb" {
 
 
 resource "azurerm_storage_account" "ubuntu" {
-    name                              = "isaru66uks${replace(var.env, "_", "")}"
+    name                              = "${var.storage_account_prefix}uks${replace(var.env, "_", "")}"
     resource_group_name               = var.rg_name
     location                          = var.rg_location
     account_replication_type          = "LRS"
