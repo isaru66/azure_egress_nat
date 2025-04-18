@@ -1,5 +1,6 @@
 provider "azurerm" {
     features {}
+    subscription_id = "79e1d757-ecdb-4dc3-b0b4-035bac76053d"
 }
 
 
@@ -100,7 +101,7 @@ resource "azurerm_route_table" "uks_hub_ingress" {
     name                          = "uks_hub_ingress"
     location                      = azurerm_resource_group.uks_hub.location
     resource_group_name           = azurerm_resource_group.uks_hub.name
-    disable_bgp_route_propagation = false
+    bgp_route_propagation_enabled = false
 
     route {
         name                      = "Default"
@@ -121,7 +122,7 @@ resource "azurerm_route_table" "uks_spoke_egress" {
     name                          = "uks_spoke_egress"
     location                      = azurerm_resource_group.uks_spoke.location
     resource_group_name           = azurerm_resource_group.uks_spoke.name
-    disable_bgp_route_propagation = false
+    bgp_route_propagation_enabled = false
 
     route {
         name                      = "Default"

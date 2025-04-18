@@ -11,12 +11,12 @@ locals {
 
 
 resource "azurerm_storage_account" "ubuntu" {
-    name                              = "pmack${replace(var.env, "_", "")}"
+    name                              = "isaru66uks${replace(var.env, "_", "")}"
     resource_group_name               = var.rg_name
     location                          = var.rg_location
     account_replication_type          = "LRS"
     account_tier                      = "Standard"
-    enable_https_traffic_only         = true
+    https_traffic_only_enabled         = true
 }
 
 

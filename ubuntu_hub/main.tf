@@ -29,14 +29,12 @@ resource "azurerm_lb" "lb" {
 
 resource "azurerm_lb_backend_address_pool" "lb" {
     name                              = "backend"
-    resource_group_name               = var.rg_name
     loadbalancer_id                   = azurerm_lb.lb.id
 }
 
 
 resource "azurerm_lb_probe" "lb" {
     name                              = "ssh"
-    resource_group_name               = var.rg_name
     loadbalancer_id                   = azurerm_lb.lb.id
     port                              = 22
 }
@@ -44,8 +42,7 @@ resource "azurerm_lb_probe" "lb" {
 
 resource "azurerm_lb_rule" "lb" {
     name                              = "ha"
-    resource_group_name               = var.rg_name
-    backend_address_pool_id           = azurerm_lb_backend_address_pool.lb.id
+    backend_address_pool_ids           = [azurerm_lb_backend_address_pool.lb.id]
     backend_port                      = 0
     frontend_ip_configuration_name    = "frontend"
     frontend_port                     = 0
@@ -56,12 +53,12 @@ resource "azurerm_lb_rule" "lb" {
 
 
 resource "azurerm_storage_account" "ubuntu" {
-    name                              = "pmack${replace(var.env, "_", "")}"
+    name                              = "isaru66uks${replace(var.env, "_", "")}"
     resource_group_name               = var.rg_name
     location                          = var.rg_location
     account_replication_type          = "LRS"
     account_tier                      = "Standard"
-    enable_https_traffic_only         = true
+    https_traffic_only_enabled         = true
 }
 
 
@@ -69,7 +66,8 @@ resource "azurerm_network_interface" "ubuntu_in" {
     name                              = "${local.name}-in"
     location                          = var.rg_location
     resource_group_name               = var.rg_name
-    enable_ip_forwarding              = true
+    # Enable IP forwarding
+    ip_forwarding_enabled = true
 
     ip_configuration {
         name                          = "config"
